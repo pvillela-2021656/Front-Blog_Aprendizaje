@@ -1,0 +1,60 @@
+/* Fondo general de toda la página */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.bg-white {
+    background-image: url('/fondo2.jpg');
+    /* desde carpeta /public */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding-bottom: 4rem;
+}
+
+/* Contenedor de contenido central */
+.page-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Estilo del bloque de perfil */
+.user-profile-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.user-profile-box {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 3rem 4rem;
+    width: 100%;
+    max-width: 850px;
+}
+
+/* Texto */
+.user-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #b71c1c;
+}
+
+.user-username,
+.user-email,
+.user-role {
+    font-size: 1.3rem;
+    margin: 0.6rem 0;
+    color: #333;
+}
+
+.user-role span {
+    font-weight: 700;
+}
