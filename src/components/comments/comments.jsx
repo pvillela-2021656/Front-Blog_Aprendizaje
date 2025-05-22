@@ -4,7 +4,6 @@ import './comments.css';
 
 export const CommentSection = ({ publicationId }) => {
     const [newComment, setNewComment] = useState('');
-    const [activePubId, setActivePubId] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
     const {
@@ -14,19 +13,14 @@ export const CommentSection = ({ publicationId }) => {
         createCommentForPublication
     } = useComments();
 
-    const handleInputFocus = () => {
-        setActivePubId(publicationId);
-    };
-
     const handleCreateComment = async () => {
         if (!newComment.trim()) return;
-        await createCommentForPublication(activePubId, newComment);
+        await createCommentForPublication(publicationId, newComment); // ✅ FIX ACÁ
         setNewComment('');
-        await getCommentsByPublication(activePubId);
+        await getCommentsByPublication(publicationId);
     };
 
     const openModal = async () => {
-        setActivePubId(publicationId);
         await getCommentsByPublication(publicationId);
         setShowModal(true);
     };
@@ -38,7 +32,6 @@ export const CommentSection = ({ publicationId }) => {
                     placeholder="Escribe un comentario..."
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    onFocus={handleInputFocus}
                     rows={2}
                 />
                 <button onClick={handleCreateComment}>Comentar</button>
@@ -59,7 +52,7 @@ export const CommentSection = ({ publicationId }) => {
                             <p className="no-comments">Ningún comentario</p>
                         ) : (
                             comments.map((c) => (
-                                <div key={c.uid} className="comment-item">
+                                <div key={c._id} className="comment-item">
                                     <div className="comment-header">
                                         <strong>{c.author?.username || 'Usuario'}</strong>
                                         <span className="comment-date">

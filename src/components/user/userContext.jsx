@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import toast from 'react-hot-toast';
 import { currentUser } from '../../services/api';
 
-const UserContext = createContext(); // ✅ Cambiado a mayúscula
+const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -30,10 +30,10 @@ export const UserProvider = ({ children }) => {
     }, [getUserProfile]);
 
     return (
-        <UserContext.Provider value={{ user, loadingUser, getUserProfile }}> {/* ✅ CORRECTO */}
+        <UserContext.Provider value={{ user, loadingUser, getUserProfile }}>
             {children}
         </UserContext.Provider>
     );
 };
 
-export const useUser = () => useContext(UserContext); // ✅ CORRECTO
+export const useUser = () => useContext(UserContext);

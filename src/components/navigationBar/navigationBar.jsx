@@ -10,7 +10,7 @@ export const NavigationBar = () => {
                 </div>
                 <ul className="navbar-menu">
                     <li className="navbar-item">Inicio</li>
-                    <li className="navbar-item">Blog</li>
+                    <li className="navbar-item negro">Blog</li>
                     <li className="navbar-item">Contacto</li>
                     <li className="navbar-item">Soporte</li>
                 </ul>

@@ -47,3 +47,11 @@ export const getCommentaries = async () => {
         console.log("Hubo un error al obtener los comentarios", error);
     }
 }
+
+export const getPublicationsByCourse = async (course) => {
+    try {
+        return await apiClient.post('publication/filterPublicationsByCourse', { course });
+    } catch (error) {
+        console.log("Error al filtrar publicaciones por curso", error);
+    }
+};

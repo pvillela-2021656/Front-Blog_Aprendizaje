@@ -15,10 +15,10 @@ export const UserProvider = ({ children }) => {
             if (response?.data?.uid) {
                 setUser(response.data);
             } else {
-                toast.error("No se pudo obtener el perfil del usuario");
+                toast.error("Couldnt load the user profile.");
             }
         } catch (err) {
-            toast.error("Error al cargar perfil");
+            toast.error("Error while loading profile.");
             console.error(err);
         } finally {
             setLoadingUser(false);
@@ -32,9 +32,9 @@ export const UserProvider = ({ children }) => {
     return (
         <UserContext.Provider value={{ user, loadingUser, getUserProfile }}>
             {children}
+
         </UserContext.Provider>
-    );
+    )
 };
 
-// Hook personalizado
 export const useUser = () => useContext(UserContext);
