@@ -13,12 +13,12 @@ export const useProfile = () => {
             if (response?.data && response.data.uid) {
                 setProfile(response.data);
             } else {
-                toast.error("No se pudo obtener el perfil del usuario");
-                console.error("Respuesta inválida:", response);
+                toast.error("Couldnt load the user profile.");
+                console.error("Invalid answer:", response);
             }
         } catch (error) {
-            toast.error("Error al cargar el perfil");
-            console.error("Error en getProfile:", error);
+            toast.error("Couldnt load the profile.");
+            console.error("Error while doing getProfile:", error);
         } finally {
             setLoading(false);
         }

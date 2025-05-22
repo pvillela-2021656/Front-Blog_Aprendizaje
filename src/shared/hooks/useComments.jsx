@@ -13,12 +13,23 @@ export const useComments = () => {
         setLoading(true);
         try {
             const response = await getCommentaries();
-            const filtered = response.data.commentaries.filter(
-                (c) => c.publication === publicationId
-            );
+            const filtered = response.data.commentaries.filter((c) => {
+                if (!c.publication) return false;
+
+                if (typeof c.publication === 'string') {
+                    return c.publication === publicationId;
+                }
+
+                if (typeof c.publication === 'object' && c.publication._id) {
+                    return c.publication._id === publicationId;
+                }
+
+                return false;
+            });
+
             setComments(filtered.reverse());
         } catch (error) {
-            toast.error("Error al obtener comentarios");
+            toast.error("No se pudieron cargar los comentarios.");
             console.error(error);
         } finally {
             setLoading(false);
@@ -27,23 +38,25 @@ export const useComments = () => {
 
     const createCommentForPublication = useCallback(async (publicationId, content) => {
         try {
-            if (!user?.uid) {
-                toast.error("Usuario no identificado");
+            const authorId = user?._id || user?.uid;
+
+            if (!authorId) {
+                toast.error("Usuario no identificado.");
                 return;
             }
 
             const commentData = {
                 publication: publicationId,
-                author: user.uid,
+                author: authorId,
                 content
             };
 
-            console.log("Comentario que se enviará:", commentData);
+            console.log("🟢 Enviando comentario:", commentData);
 
             await createComment(commentData);
-            toast.success("Comentario agregado");
+            toast.success("Comentario agregado.");
         } catch (error) {
-            toast.error("Error al comentar");
+            toast.error("Error al crear el comentario.");
             console.error(error);
         }
     }, [user]);

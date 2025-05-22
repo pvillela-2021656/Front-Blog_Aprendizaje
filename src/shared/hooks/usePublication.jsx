@@ -1,31 +1,42 @@
 import { useCallback, useState } from 'react';
 import toast from 'react-hot-toast';
-import { getPublications } from '../../services/api';
+import {
+    getPublications,
+    getPublicationsByCourse,
+    getRecentPublications
+} from '../../services/api';
 
 export const usePublications = () => {
     const [publications, setPublications] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const getAllPublications = useCallback(async () => {
+    const handleFetch = async (fetchFn, errorMessage = 'Error al cargar publicaciones') => {
         setLoading(true);
         try {
-            const response = await getPublications();
-            if (response?.data) {
-                setPublications(response.data.publications);
+            const res = await fetchFn();
+            if (res?.data?.publications) {
+                setPublications(res.data.publications);
             } else {
-                toast.error("No se encontraron publicaciones");
+                toast.error("No se encontraron publicaciones.");
             }
         } catch (error) {
-            toast.error("Error al cargar publicaciones");
-            console.error("Error en getAllPublications:", error);
+            toast.error(errorMessage);
+            console.error(errorMessage, error);
         } finally {
             setLoading(false);
         }
-    }, []);
+    };
+
+    const getAllPublications = useCallback(() => handleFetch(getPublications), []);
+    const getRecent = () => handleFetch(getRecentPublications, "Error al cargar publicaciones recientes");
+    const getByCourse = (courseName) =>
+        handleFetch(() => getPublicationsByCourse(courseName), `Error al filtrar publicaciones por ${courseName}`);
 
     return {
         publications,
         loading,
-        getAllPublications
+        getAllPublications,
+        getRecent,
+        getByCourse
     };
 };
